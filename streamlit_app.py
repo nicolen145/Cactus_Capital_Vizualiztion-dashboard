@@ -12,7 +12,7 @@ st.set_page_config(
 # ---------------------------------------------------------------------
 # Load datasets
 
-@st.cache_data
+#@st.cache_data
 def load_data():
     """Load and merge the founders and startup data."""
     
