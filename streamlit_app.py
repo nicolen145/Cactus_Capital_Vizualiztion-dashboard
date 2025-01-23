@@ -3,38 +3,39 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import re
+import os
+import numpy as np
+import plotly.graph_objects as go
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import time
 
 # Set Streamlit page config
-st.set_page_config(page_title="Startups Dashboard", page_icon="📊", layout="wide")
-
-st.title("Startups Dashboard")
-st.write("Welcome to the dashboard displaying data on startups!")
+st.set_page_config(page_title="Cactus Capital Startups Dashboard", page_icon="🌵", layout="wide")
+st.title("🌵 Cactus Capital fund for Startups 🌵")
+# Dashboard description
+st.markdown(
+    """
+    This dashboard analyzes investment trends at Cactus Capital, a student-run VC fund at Ben-Gurion University (BGU).  
+    Our goal is to identify the key factors that increase a startup's chances of securing investment.  
+    """
+)
 
 # Load the pre-cleaned datasets
 founders_data = pd.read_csv("data/Cleaned_Founders_Data.csv")
 startup_data = pd.read_csv("data/Cleaned_Startup_Data.csv")
-deal_data = pd.read_csv("data/Cleaned_Deal_Data.csv")  # Load Deal Data
-
-# Merge founders and startup data
-merged_data = founders_data.merge(startup_data, left_on="Startup", right_on="Name", how="left")
-
-# Merge startup data with deal data
-startup_data = pd.merge(
-    startup_data,
-    deal_data[['Name', 'Cohort']],
-    on='Name',
-    how='left'
-)
-
-# Ensure "Year" column exists
-if "Year" not in startup_data.columns:
-    startup_data["Year"] = None
-
-# Aggregate data to count startups per faculty, path, and status
-faculty_path_status_distribution = merged_data.groupby(["Faculty", "Path", "Status"]).size().reset_index(name="Count")
+deal_data = pd.read_csv("data/Cleaned_Deal_Data.csv") 
 
 
-startup_data_original = pd.read_csv('data/Cleaned_Startup_Data.csv')
+
+status_categories = {
+    "Applied": ["Application", "Submitted"],
+    "Selection Process": ["Introduced", "First Meeting", "Second Follow-Up", "Live Pitch Event", "Follow-Up Meeting"],
+    "Considered but Not Invested": ["IC But Not Invested"],
+    "Invested": ["Invested", "Funding Secured"],
+    "Rejected": ["Denied", "Not Selected", "Opted Out"],
+    "Other": ["Other", "Unknown", "Pending"]
+}
 
 # Define industry categories for classification
 industry_categories = {
@@ -44,87 +45,120 @@ industry_categories = {
     "Finance": ["Fintech", "Finance", "Banking", "Investment"],
     "Agriculture": ["Agritech", "Agriculture", "Farming"],
     "Retail": ["Retail", "Ecommerce", "Marketplace", "Shopping"],
-    "Environment": ["Green", "Energy", "Sustainability", "CleanTech"],
+    "Energy": ["Green", "Energy", "Sustainability", "CleanTech"],
     "Entertainment": ["Entertainment", "Media", "Gaming", "Music"],
     "Mobility": ["Automotive", "Mobility", "Transport", "Logistics"],
-    "Other": ["Other", "General", "Miscellaneous"]
+    "Manufacturing": ["Manufacturing", "Industrial", "Production", "Supply Chain"],
+    "Food": ["FoodTech", "Beverage", "Restaurants", "Hospitality"],
+    "Security": ["Defense", "Aerospace", "MilitaryTech", "Cybersecurity", "Privacy"],
+    "Government": ["GovTech", "Public Sector", "Smart Cities"],
+    "HR": ["HRTech", "Recruitment", "Hiring", "Talent Management"],
 }
+
 
 # Function to classify industries
 def classify_industry(industry, categories):
     for category, keywords in categories.items():
         if any(keyword.lower() in industry.lower() for keyword in keywords):
             return category
-    return "Uncategorized"
+    return "Other"
+
+# Function to classify status
+def classify_status(status, categories):
+    for category, keywords in categories.items():
+        if any(keyword.lower() in status.lower() for keyword in keywords):
+            return category
+    return "Other"
+
+# Function to classify faculty
+def classify_faculty(faculty):
+    faculties = ['Business and Management','Cognitive science','Engineering','Health Sciences','Humanities and Social Sciences','Natural Sciences','Cyber Industry']
+    if faculty in faculties:
+        return faculty
+    return "Not BGU"
+
+founders_data["Faculty"] = founders_data["Faculty"].apply(lambda x: classify_faculty(x))
 
 # Transform startup data
-startup_data = startup_data_original.copy()
 startup_data["Industry"] = startup_data["Industry"].fillna("").str.strip()
 startup_data["Industry_Category"] = startup_data["Industry"].str.split(",")
 startup_data = startup_data.explode("Industry_Category")
 startup_data["Industry_Category"] = startup_data["Industry_Category"].str.strip()
-startup_data["Classified_Category"] = startup_data["Industry_Category"].apply(
+startup_data["Industry_Category"] = startup_data["Industry_Category"].apply(
     lambda x: classify_industry(x, industry_categories)
 )
+startup_data["Status"] = startup_data["Status"].apply(
+    lambda x: classify_industry(x, status_categories)
+)
 
-# Merge with deal data
-merged_data = pd.merge(
-    startup_data, 
-    deal_data[['Name', 'Cohort']], 
-    on='Name', 
+
+
+# Merge founders and startup data
+merged_data = founders_data.merge(startup_data, left_on="Startup", right_on="Name", how="left")
+# Aggregate data to count startups per faculty, path, and status
+faculty_path_status_distribution = merged_data.groupby(["Faculty", "Path", "Status"]).size().reset_index(name="Count")
+# Merge startup data with deal data
+startup_data = pd.merge(
+    startup_data,
+    deal_data[['Name', 'Cohort','Year']],
+    on='Name',
     how='left'
 )
+startup_data["Year"] = startup_data["Year"].astype("Int64")
+# Merge datasets
+merged_data_1 = pd.merge(founders_data, startup_data, left_on='Startup', right_on='Name', how='inner')
+merged_data_1 = pd.merge(merged_data_1, deal_data, left_on='Startup', right_on='Name', how='left')
 
-# Clean and transform the Cohort column
-merged_data["Cohort_Copy"] = merged_data["Cohort"].copy()
-start_year = 2019
+# Ensure "Year" column exists
+if "Year" not in startup_data.columns:
+    startup_data["Year"] = None
 
-def clean_cohort(value):
-    if pd.isna(value) or value in ["Cactus Academy", "Checks"]:
-        return None
-    if value == "Current":
-        return 12
-    match = re.search(r'\d+', str(value))
-    return int(match.group()) if match else None
-
-merged_data["Cohort_Copy"] = merged_data["Cohort_Copy"].apply(clean_cohort)
-
-# Add Year column
-merged_data["Year"] = merged_data["Cohort_Copy"].apply(
-    lambda x: start_year + ((x - 1) // 2) if pd.notna(x) else None
-)
-merged_data["Year"] = merged_data["Year"].astype("Int64")
 
 # Filter out invalid Year rows
-cleaned_data = merged_data[merged_data["Year"].notna()].reset_index(drop=True)
+cleaned_data = startup_data[merged_data["Year"].notna()].reset_index(drop=True)
 
 # ---------------------------------------------------------------------
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio(
     "Select a Visualization:",
-    ["Bar Chart", "Pie Chart", "Trends & Cohort Analysis", "Applications & Industry Trends", "Startup Status Flow", "Graph 3", "Graph 4"]
+    ["Faculty Distribution","Industry Trends Over the Years","Gender Analysis in Startup Investment"]
 )
 
 # ---------------------------------------------------------------------
 # Page Rendering Based on Selection
 
-if page == "Bar Chart":
-    st.title("Bar Chart: Faculty Distribution")
+if page == "Faculty Distribution":
+    st.title("Faculty Distribution")
 
-    # Status Filter (Positioned Below the Title)
-    st.markdown("### Select Status Filter:")
-    if "Status" in faculty_path_status_distribution.columns:
-        status_options = ["All"] + sorted(faculty_path_status_distribution["Status"].dropna().unique().tolist())
-        selected_status = st.selectbox("", status_options, key="status_filter_bar_chart", label_visibility="collapsed")
+    # Create two columns: One for the description (left), one for the filter (right)
+    col1, col2 = st.columns([3, 2])  # Adjust column width as needed
 
-        # Filter data based on selection
-        filtered_data = faculty_path_status_distribution.copy()
-        if selected_status != "All":
-            filtered_data = filtered_data[filtered_data["Status"] == selected_status]
-    else:
-        st.warning("'Status' column not found in the dataset. Filtering disabled.")
-        filtered_data = faculty_path_status_distribution.copy()
+    with col1:
+        # Short explanatory paragraph on the left
+        st.markdown("**The chart displays the number of startups per faculty, categorized by acceleration program.**")
+        st.markdown("**The filter allows users to select a startup status (All, Invested, Rejected, or Selection Process) to analyze trends across faculties.**")
+
+    with col2:
+        # Status Filter on the right
+        st.markdown("### Select Status Filter:")
+        if "Status" in faculty_path_status_distribution.columns:
+            # Keep only these specific status options
+            allowed_statuses = ["All", "Invested", "Rejected", "Selection Process"]
+            status_options = ["All"] + sorted(set(faculty_path_status_distribution["Status"].dropna()) & set(allowed_statuses))
+            
+            selected_status = st.selectbox("", status_options, key="status_filter_bar_chart", label_visibility="collapsed")
+
+            # Filter data based on selection
+            filtered_data = faculty_path_status_distribution.copy()
+            if selected_status != "All":
+                filtered_data = filtered_data[filtered_data["Status"] == selected_status]
+        else:
+            st.warning("'Status' column not found in the dataset. Filtering disabled.")
+            filtered_data = faculty_path_status_distribution.copy()
+
+    # Sort faculties alphabetically
+    filtered_data = filtered_data.sort_values(by="Faculty")
 
     # Bar Chart Visualization
     fig_bar = px.bar(
@@ -137,280 +171,189 @@ if page == "Bar Chart":
         labels={"Faculty": "Faculty", "Count": "Number of Startups", "Path": "Acceleration Program"},
         height=500
     )
+
     st.plotly_chart(fig_bar)
 
-elif page == "Pie Chart":
-    st.title("Pie Chart: Faculty Proportions")
 
-    # Pie Chart Visualization
-    fig_pie = px.pie(
-        faculty_path_status_distribution,
-        names="Faculty",
-        values="Count",
-        title="Pie Chart of Faculty Distribution",
-        hole=0.4,
-        color="Faculty"
-    )
-    st.plotly_chart(fig_pie)
-
-elif page == "Trends & Cohort Analysis":
-    st.title("Trends & Cohort Analysis")
-
-    # Move Filters to the Upper Side of the Chart
-    col1, col2 = st.columns([1, 1])
-
-    with col1:
-        # **Filter by Faculty**
-        if "Faculty" in merged_data.columns:
-            faculty_list = ["All"] + sorted(merged_data["Faculty"].dropna().unique())
-            selected_faculty = st.selectbox("Select Faculty", faculty_list, key="faculty_filter")
-
-    with col2:
-        # **Filter by Startup Type (Industry)**
-        if "Industry" in merged_data.columns:
-            industry_list = ["All"] + sorted(merged_data["Industry"].dropna().unique())
-            selected_industry = st.selectbox("Select Startup Type", industry_list, key="industry_filter")
-
-    # Apply Filters
-    filtered_data = merged_data.copy()
-
-    if selected_faculty != "All":
-        filtered_data = filtered_data[filtered_data["Faculty"] == selected_faculty]
-
-    if selected_industry != "All":
-        filtered_data = filtered_data[
-            filtered_data["Industry"].str.upper().str.contains(selected_industry, na=False, case=False)
-        ]
-
-    # Creating two columns for side-by-side visualization
-    col1, col2 = st.columns(2)
-
-    # Graph 1: Run Chart for Startups by Year
-    with col1:
-        st.subheader("Startups by Year (Click to Filter Cohorts)")
-
-        if "Year" in filtered_data.columns:
-            yearly_counts = filtered_data["Year"].value_counts().reset_index()
-            yearly_counts.columns = ["Year", "Startup Count"]
-            yearly_counts = yearly_counts.sort_values("Year")
-
-            fig1 = px.line(
-                yearly_counts,
-                x="Year",
-                y="Startup Count",
-                markers=True,
-                title="Trends in Number of Startups Over the Years (Run Chart)",
-                labels={"Year": "Year", "Startup Count": "Number of Startups"},
-            )
-            st.plotly_chart(fig1)
-
-            # Add a selection box for clicking a year
-            selected_year = st.selectbox("Click on a year to filter the cohort chart:", yearly_counts["Year"])
-
-    # Graph 2: Cohort (Semester) Distribution (Filtered by Selected Year)
-    with col2:
-        st.subheader(f"Startups by Cohort (Year: {selected_year})")
-
-        if "Cohort_Copy" in filtered_data.columns:
-            cohort_counts = filtered_data[filtered_data["Year"] == selected_year]["Cohort_Copy"].value_counts().reset_index()
-            cohort_counts.columns = ["Cohort", "Startup Count"]
-            cohort_counts = cohort_counts.sort_values("Cohort")
-
-            fig2 = px.bar(
-                cohort_counts,
-                x="Cohort",
-                y="Startup Count",
-                title=f"Distribution of Startups by Cohort (Year: {selected_year})",
-                labels={"Cohort": "Cohort (Semester)", "Startup Count": "Number of Startups"},
-                text_auto=True
-            )
-            st.plotly_chart(fig2)
-
-elif page == "Applications & Industry Trends":
-    st.title("Applications & Industry Trends")
-
-    # Ensure valid data exists before rendering
-    if "Year" in startup_data.columns and "Classified_Category" in startup_data.columns:
-        
-        # Visualization 1: Applications Over the Years
-        st.subheader("Number of Applications per Year")
-        applications_per_year = startup_data["Year"].value_counts().sort_index()
-
-        if not applications_per_year.empty:
-            fig3 = px.bar(
-                x=applications_per_year.index,
-                y=applications_per_year.values,
-                labels={"x": "Year", "y": "Number of Applications"},
-                title="Number of Applications per Year",
-                text=applications_per_year.values
-            )
-            fig3.update_traces(textposition="outside")
-            st.plotly_chart(fig3)
-
-        # Visualization 2: Industry Categories Over the Years
-        st.subheader("Industry Categories Over the Years")
-        industry_yearly_counts = (
-            startup_data.groupby(["Year", "Classified_Category"])
-            .size()
-            .reset_index(name="Count")
-        )
-
-        if not industry_yearly_counts.empty:
-            fig4 = px.bar(
-                industry_yearly_counts,
-                x="Year",
-                y="Count",
-                color="Classified_Category",
-                title="Distribution of Industry Categories Over the Years",
-                labels={"Year": "Year", "Count": "Number of Startups"},
-                text="Count"
-            )
-            st.plotly_chart(fig4)
-    else:
-        st.warning("No valid data found for Applications or Industry Trends.")
 # ---------------------------------------------------------------------
 # Page Rendering Based on Selection
 
-if page == "Status Quantities Sankey":
-    st.title("Status Quantities (Sankey Diagram)")
+elif page == "Industry Trends Over the Years":
+    st.title("Industry Trends Over the Years")
 
-    # Ensure "Status" column exists
-    if "Status" in startup_data.columns:
-        # Count the number of startups in each status
-        status_counts = startup_data["Status"].value_counts().reset_index()
-        status_counts.columns = ["Status", "Count"]
+    if "Year" in cleaned_data.columns and "Industry_Category" in cleaned_data.columns:
+        # Ensure Year is an integer and remove NaN values
+        cleaned_data = cleaned_data.dropna(subset=["Year"])  
+        cleaned_data["Year"] = cleaned_data["Year"].astype(int)  # Convert to integer
 
-        # Create nodes (status labels)
-        all_labels = status_counts["Status"].tolist()
-        node_indices = {label: i for i, label in enumerate(all_labels)}
+        # Group data by Year for overall trend (without breaking into industries)
+        yearly_overall_counts = cleaned_data.groupby("Year").size().reset_index(name="Total Startups")
 
-        # Create links (self-referencing to show quantities)
-        sources = [node_indices[status] for status in status_counts["Status"]]
-        targets = [node_indices[status] for status in status_counts["Status"]]  # Self-links
-        values = status_counts["Count"].tolist()
-
-        # Create Sankey Diagram
-        fig_sankey = go.Figure(go.Sankey(
-            node=dict(
-                pad=15,
-                thickness=20,
-                line=dict(color="black", width=0.5),
-                label=all_labels
-            ),
-            link=dict(
-                source=sources,
-                target=targets,
-                value=values
-            )
-        ))
-
-        fig_sankey.update_layout(title_text="Startup Status Quantities", font_size=12)
-        st.plotly_chart(fig_sankey)
-
-    else:
-        st.warning("⚠️ The dataset does not contain a 'Status' column. Unable to generate the Sankey Diagram.")
-
-
-elif page == "Graph 3":
-    st.title("Interactive Dashboard: Applications Over the Years")
-
-    if "Year" in cleaned_data.columns and "Classified_Category" in cleaned_data.columns:
-        # Count applications per year
-        applications_per_year = cleaned_data["Year"].value_counts().sort_index()
-
-        fig = px.bar(
-        x=applications_per_year.index,
-        y=applications_per_year.values,
-        labels={"x": "Year", "y": "Number of Applications"},
-        title="Number of Applications per Year",
-        text=applications_per_year.values
-    )
-    fig.update_traces(textposition="outside")
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Select a year for category breakdown
-    selected_year = st.selectbox(
-        "Select a year to view category breakdown:",
-        options=applications_per_year.index.tolist(),
-        help="Select a year to view its category breakdown"
-    )
-
-    if selected_year:
-        category_data = cleaned_data[cleaned_data["Year"] == selected_year]
-        category_counts = category_data["Classified_Category"].value_counts().sort_index()
-
-        breakdown_fig = px.bar(
-            x=category_counts.index,
-            y=category_counts.values,
-            labels={"x": "Category", "y": "Number of Applications"},
-            title=f"Category Breakdown for {selected_year}",
-            text=category_counts.values,
-            color=category_counts.index,
-            color_discrete_sequence=px.colors.qualitative.Plotly
-        )
-        breakdown_fig.update_traces(textposition="outside")
-        st.plotly_chart(breakdown_fig)
-
-elif page == "Graph 4":
-    st.title("Dashboard: Industry Categories Over the Years")
-
-    if "Year" in cleaned_data.columns and "Classified_Category" in cleaned_data.columns:
-        # Group data by Year and Classified_Category
+        # Group data by Year and Industry Category for category-specific trends
         industry_yearly_counts = (
-            cleaned_data.groupby(["Year", "Classified_Category"])
+            cleaned_data.groupby(["Year", "Industry_Category"])
             .size()
             .reset_index(name="Count")
         )
 
-        # Get unique categories and define colors
-        unique_categories = sorted(industry_yearly_counts["Classified_Category"].unique())
-        accessible_colors = px.colors.qualitative.Set1
-        category_colors = {
-            category: accessible_colors[i % len(accessible_colors)]
-            for i, category in enumerate(unique_categories)
-        }
+        # **12 Distinct Colorblind-Friendly Colors (CUD color palette)**
+        color_palette = [
+            "#332288", "#117733", "#44AA99", "#F0E442", "#88CCEE", "#DDCC77",
+            "#CC6677", "#AA4499", "#882255", "#000000", "#0571B0", "#CA0020"
+        ]  
 
-        # Create the bar chart for all categories
+        # Assign each industry category a unique color
+        unique_categories = sorted(industry_yearly_counts["Industry_Category"].unique())
+        category_colors = {category: color_palette[i % len(color_palette)] for i, category in enumerate(unique_categories)}
+
+        # Layout: Explanation above, two columns for charts
+        st.markdown("### Industry Trends Analysis")
+        st.markdown(
+            "**The first chart provides an overall picture of startup growth over the years, "
+            "while the second chart allows users to compare specific industry categories.**"
+        )
+
+        # Create two columns
+        col1, col2 = st.columns(2)
+
+        with col1:
+            # **Fixing the Bar Chart (Categorical X-axis)**
+            fig_overall = px.bar(
+                yearly_overall_counts,
+                x=yearly_overall_counts["Year"].astype(str),  # Convert to string for categorical x-axis
+                y="Total Startups",
+                title="Overall Startup Growth Over the Years",
+                labels={"x": "Year", "Total Startups": "Number of Startups"},
+                text_auto=True,
+                color_discrete_sequence=["#1f77b4"]  # Single blue color for clarity
+            )
+            st.plotly_chart(fig_overall, use_container_width=True)
+
+        with col2:
+            # Add "All Categories" option to the category selection dropdown
+            all_categories_option = ["All Categories"] + unique_categories
+
+            # Multiselect for category-specific trends
+            selected_categories = st.multiselect(
+                "Select categories to compare yearly trends:",
+                options=all_categories_option,
+                default=["All Categories"],
+            )
+
+            # Handle "All Categories" selection
+            if "All Categories" in selected_categories:
+                selected_categories = unique_categories  # Show all if "All Categories" is selected
+
+            if selected_categories:
+                # Filter data for the selected categories
+                category_data = industry_yearly_counts[
+                    industry_yearly_counts["Industry_Category"].isin(selected_categories)
+                ]
+
+                # **Fixing the Trends Line Chart (Continuous X-axis)**
+                fig_category = px.line(
+                    category_data,
+                    x="Year",  # Use integer year values
+                    y="Count",
+                    color="Industry_Category",
+                    title="Yearly Trends for Selected Categories",
+                    labels={"Year": "Year", "Count": "Number of Startups", "Industry_Category": "Category"},
+                    color_discrete_map=category_colors
+                )
+
+                # **Ensure X-axis only shows whole years**
+                fig_category.update_xaxes(
+                    tickmode="array",
+                    tickvals=sorted(industry_yearly_counts["Year"].unique()),  # Force integer years
+                    ticktext=[str(year) for year in sorted(industry_yearly_counts["Year"].unique())]  # Display as string
+                )
+
+                st.plotly_chart(fig_category, use_container_width=True)
+
+
+# ---------------------------------------------------------------------
+# Page Rendering Based on Selection
+if page == "Gender Analysis in Startup Investment":
+    # Title and description
+    data = merged_data_1
+    st.title('Gender Analysis in Startup Investment')
+
+    # Filter only relevant paths
+    relevant_paths = ['The LAUNCHER', 'The KICKSTARTER']
+    data = data[data['Path_x'].isin(relevant_paths)]
+
+    # Define consistent colors for gender categories
+    gender_colors = {
+        'Female': '#FF69B4',  # Pink
+        'Male': '#1f77b4',    # Blue
+        'Prefer not to disclose': '#9467bd'  # Purple
+    }
+
+    # Layout: Two columns for Pie Chart (left) and Bar Chart (right)
+    st.header('Gender Distribution and Investment Progress')
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            "**This section provides an overview of gender representation among startup founders.** "
+            "The pie chart shows the total number of founders from each gender, helping to visualize "
+            "disparities in startup leadership."
+        )
+
+        # Overall Founders by Gender Pie Chart
+        founders_by_gender = (
+            data.groupby('Gender')['Num Of Founders']
+            .sum()
+            .reset_index()
+        )
+        founders_by_gender.columns = ['Gender', 'Count']
+
+        fig1 = px.pie(
+            founders_by_gender,
+            names='Gender',
+            values='Count',
+            title='Total Founders by Gender',
+            hole=0.3,
+            color='Gender', 
+            color_discrete_map=gender_colors  # Apply gender-specific colors
+        )
+        st.plotly_chart(fig1, use_container_width=True)
+
+    with col2:
+        # Move path filter above the bar chart
+        paths = ["All Paths"] + list(data["Path_x"].unique())  # Allow filtering by path
+        selected_path = st.selectbox('Select Program Path:', paths, index=0)
+
+        if selected_path != "All Paths":
+            data = data[data["Path_x"] == selected_path]
+
+        # Add explanation above the bar chart
+        st.markdown(
+            "**This bar chart shows how founders of different genders progress through the investment process.** "
+            "Each bar represents the number of founders who reached each stage: 'Invested', 'Rejected', "
+            "or are still in the 'Selection Process'."
+        )
+
+        key_statuses = ["Invested", "Rejected", "Selection Process"]
+        status_gender_counts = (
+            data[data['Status_x'].isin(key_statuses)]
+            .groupby(['Status_x', 'Gender'])['Num Of Founders']
+            .sum()
+            .reset_index()
+        )
+
         fig2 = px.bar(
-            industry_yearly_counts,
-            x="Year",
-            y="Count",
-            color="Classified_Category",
-            title="Distribution of Industry Categories Over the Years",
-            labels={"Year": "Year", "Count": "Number of Startups"},
-            text="Count",
-            color_discrete_map=category_colors
+            status_gender_counts, 
+            x='Status_x', 
+            y='Num Of Founders', 
+            color='Gender', 
+            title='Founders by Gender Across Investment Stages', 
+            barmode='group',
+            labels={"Status_x": "Application Status", "Num Of Founders": "Number of Founders"},
+            color_discrete_map=gender_colors  # Ensure consistent colors
         )
         st.plotly_chart(fig2, use_container_width=True)
 
-        # Add "All Categories" to the category selection dropdown
-        all_categories_option = ["All Categories"] + unique_categories
 
-        # Multiselect with "All Categories" functionality
-        selected_categories = st.multiselect(
-            "Select categories to compare their yearly trends:",
-            options=all_categories_option,
-            default=["All Categories"],  # Default to all categories
-        )
 
-        # Handle "All Categories" selection
-        if "All Categories" in selected_categories:
-            selected_categories = unique_categories  # Use all categories if "All Categories" is selected
-
-        if selected_categories:
-            # Filter data for the selected categories
-            category_data = industry_yearly_counts[
-                industry_yearly_counts["Classified_Category"].isin(selected_categories)
-            ]
-
-            # Create a line chart for the selected categories
-            line_fig = px.line(
-                category_data,
-                x="Year",
-                y="Count",
-                color="Classified_Category",
-                title="Yearly Trends for Selected Categories",
-                labels={"Year": "Year", "Count": "Number of Startups", "Classified_Category": "Category"},
-                color_discrete_map=category_colors
-            )
-            st.plotly_chart(line_fig)
+# ---------------------------------------------------------------------
