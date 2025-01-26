@@ -38,7 +38,7 @@ Engineering,smart socks,7th,Female,7.0,2022
 Engineering,first aid for anaphylaxis,7th,Female,7.0,2022
 Humanities and Social Sciences,Dia-bes,7th,Male,7.0,2022
 Engineering,Sympato,10th,Male,10.0,2023
-,VisualDiff,Current,Male,12.0,2024
+,VisualDiff,Current,Male,,
 Engineering,Hear Clear,9th,Male,9.0,2023
 Engineering,Acoustic Device,9th,Male,9.0,2023
 Engineering,Quicker roads,5th,,5.0,2021
@@ -85,7 +85,7 @@ Humanities and Social Sciences,Stats.,7th,Male,7.0,2022
 Engineering,reMASK,6th,Male,6.0,2021
 Engineering,cross by,5th,,5.0,2021
 Engineering,Manteca AI,6th,Male,6.0,2021
-Natural Sciences,AeroAid,Current,Male,12.0,2024
+Natural Sciences,AeroAid,Current,Male,,
 Engineering,Kazoom,4th,,4.0,2020
 ,a secure computation of operating system,7th,Female,7.0,2022
 Engineering,workit,9th,Female,9.0,2023
@@ -149,7 +149,7 @@ Engineering,Social Order,11th,Male,11.0,2024
 Engineering,SocialOrder,9th,Male,9.0,2023
 ,Acneowledge,11th,Female,11.0,2024
 ,M-adas,7th,Male,7.0,2022
-Natural Sciences,AeroAid,Current,Male,12.0,2024
+Natural Sciences,AeroAid,Current,Male,,
 Business and Management,🌵 🎓PhotoFly,Cactus Academy,,,
 Engineering,Count Me In The Office,4th,,4.0,2020
 Health Sciences,Crispr Stem & Therapeutics Ltd,5th,,5.0,2021
@@ -175,7 +175,7 @@ Engineering,Home Diagnosis for Breast Cancer,7th,Female,7.0,2022
 Health Sciences,KICK,Checks,Male,,
 Business and Management,ImpactNow,Checks,Male,,
 IT,Confessions,5th,,5.0,2021
-Natural Sciences,"""Digital Twin—IoT and Soil-Crop Imaging, a Robust smart Farming Solution""",Current,Male,12.0,2024
+Natural Sciences,"""Digital Twin—IoT and Soil-Crop Imaging, a Robust smart Farming Solution""",Current,Male,,
 Engineering,CHECKISTHEBEST,Checks,Male,,
 Engineering,DFCHECK,Checks,Male,,
 Natural Sciences,DFCHECK,Checks,Female,,
@@ -193,7 +193,7 @@ Natural Sciences,coffee front,8th,Male,8.0,2022
 Engineering,soilio,9th,Male,9.0,2023
 Health Sciences,Mingle-pool,10th,Male,10.0,2023
 Engineering,EduVision,7th,Male,7.0,2022
-Cyber Industry,NFThrone,6th,Male,6.0,2021
+Cyber industry ex-payoneer (formal curse),NFThrone,6th,Male,6.0,2021
 Engineering,EduVision,7th,Male,7.0,2022
 Engineering,AVIS,7th,Male,7.0,2022
 Engineering,EduVision,5th,,5.0,2021
@@ -275,7 +275,7 @@ Engineering,advertiseMe,4th,,4.0,2020
 Natural Sciences,Shifty,10th,Male,10.0,2023
 Natural Sciences,ChikChat,10th,Male,10.0,2023
 Engineering,🌵 🎓PhotoFly,Cactus Academy,,,
-Cognitive science,Shalom Hebrew,5th,,5.0,2021
+Cognitive Science,Shalom Hebrew,5th,,5.0,2021
 ,Whilx,10th,Male,10.0,2023
 ,DeliGate,10th,Male,10.0,2023
 Business and Management,🌵TravLR,Cactus Academy,,,
@@ -309,7 +309,7 @@ Engineering,EIO,11th,Male,11.0,2024
 Engineering,Optimizing Doctor Appointments,7th,Male,7.0,2022
 Health Sciences,🌵🎓Fluffy,Cactus Academy,,,
 Natural Sciences,Answer,4th,,4.0,2020
-Engineering,Dsee,Current,Male,12.0,2024
+Engineering,Dsee,Current,Male,,
 Humanities and Social Sciences,Ozen Kashevet,7th,Male,7.0,2022
 ,M-adas,7th,Male,7.0,2022
 Business and Management,M-ADAS,4th,,4.0,2020
@@ -328,7 +328,7 @@ Business and Management,Cleaner,11th,Male,11.0,2024
 Natural Sciences,ChikChat,10th,Male,10.0,2023
 Business and Management,BuildShield,9th,Male,9.0,2023
 Health Sciences,Social/free market app,7th,Male,7.0,2022
-Cognitive science,Mind Trainer,7th,Male,7.0,2022
+Cognitive Science,Mind Trainer,7th,Male,7.0,2022
 Engineering,Plant-Sitter,10th,Male,10.0,2023
 Natural Sciences,WeRun,5th,,5.0,2021
 Engineering,Mommy,9th,Male,9.0,2023
@@ -340,10 +340,10 @@ Engineering,Kazoom,4th,,4.0,2020
 Engineering,Rally,4th,,4.0,2020
 Engineering,3D Green,4th,,4.0,2020
 Engineering,Roommatch,8th,Male,8.0,2022
-,We Power Energy Company,Current,Male,12.0,2024
+,We Power Energy Company,Current,Male,,
 not bgu,Welfare in dairy-barn,6th,Male,6.0,2021
 Health Sciences,ChatPDFbASKETBALL,,Male,,
-,"""Digital Twin—IoT and Soil-Crop Imaging, a Robust smart Farming Solution""",Current,Female,12.0,2024
+,"""Digital Twin—IoT and Soil-Crop Imaging, a Robust smart Farming Solution""",Current,Female,,
 Humanities and Social Sciences,National young women parliament in the shadow of the corona,5th,,5.0,2021
 ,Desite,10th,Female,10.0,2023
 Health Sciences,Boobies,7th,Female,7.0,2022
@@ -369,9 +369,9 @@ Engineering,לפתור את בעיית ההתמכרות בכל סוג,9th,Male,9
 Engineering,Rally,4th,,4.0,2020
 Humanities and Social Sciences,Avatar Bill,9th,Female,9.0,2023
 Natural Sciences,TrueMate,4th,,4.0,2020
-Humanities and Social Sciences,MaWay,Current,Female,12.0,2024
+Humanities and Social Sciences,MaWay,Current,Female,,
 Humanities and Social Sciences,MaWay,11th,Female,11.0,2024
-Natural Sciences,GetLoose,Current,Male,12.0,2024
+Natural Sciences,GetLoose,Current,Male,,
 Engineering,SwimSafe,4th,,4.0,2020
 Business and Management,DeliGate,10th,Female,10.0,2023
 Humanities and Social Sciences,The Treehouse,4th,,4.0,2020
@@ -393,7 +393,7 @@ Engineering,Zavat,6th,Male,6.0,2021
 Business and Management,Pop Star,9th,Male,9.0,2023
 ,Dive log app,9th,Male,9.0,2023
 Natural Sciences,בזרימה,6th,Male,6.0,2021
-Business and Management,SUBIL Technologies ltd.;,Current,Male,12.0,2024
+Business and Management,SUBIL Technologies ltd.;,Current,Male,,
 Engineering,Altrainative,6th,Female,6.0,2021
 Engineering,🌵 🎓 easystream,Cactus Academy,,,
 Engineering,B - Cycle,4th,,4.0,2020
@@ -411,7 +411,7 @@ Natural Sciences,Athena,10th,Male,10.0,2023
 Natural Sciences,AI Shortcut,8th,Male,8.0,2022
 Engineering,AllerBite,11th,Male,11.0,2024
 ,Syndicate,7th,Male,7.0,2022
-Engineering,Smart Appointment Management System - Dynamic and Automated Appointment Scheduling,Current,Female,12.0,2024
+Engineering,Smart Appointment Management System - Dynamic and Automated Appointment Scheduling,Current,Female,,
 Health Sciences,Date rape drug detection,5th,,5.0,2021
 Engineering,Accelerating Machine Learning for the IoT Market,7th,Male,7.0,2022
 Business and Management,SendWith,5th,,5.0,2021
@@ -449,22 +449,22 @@ Humanities and Social Sciences,MilliCare,9th,Female,9.0,2023
 Business and Management,🌵 🎓 easystream,Cactus Academy,,,
 Engineering,Kazoom,4th,,4.0,2020
 Natural Sciences,TOM:BGU,4th,,4.0,2020
-Engineering,CommuniPass,Current,Male,12.0,2024
+Engineering,CommuniPass,Current,Male,,
 Natural Sciences,smart basketball,9th,Male,9.0,2023
 Engineering,P.EYE.NO,4th,,4.0,2020
 Engineering,P.EYE.NO,5th,,5.0,2021
 Natural Sciences,WeTeach,4th,,4.0,2020
 ,HairU,10th,Male,10.0,2023
-,Listo,Current,,12.0,2024
-,Match day,Current,,12.0,2024
-,Easy Hydro,Current,,12.0,2024
-,Rufoof,Current,,12.0,2024
-,Ai automation for cad design,Current,,12.0,2024
-,Caseo,Current,,12.0,2024
-,Meeting Point,Current,,12.0,2024
-,Dsee,Current,,12.0,2024
-,BDVTrading,Current,,12.0,2024
-,F.B Diamond,Current,,12.0,2024
+,Listo,Current,,,
+,Match day,Current,,,
+,Easy Hydro,Current,,,
+,Rufoof,Current,,,
+,Ai automation for cad design,Current,,,
+,Caseo,Current,,,
+,Meeting Point,Current,,,
+,Dsee,Current,,,
+,BDVTrading,Current,,,
+,F.B Diamond,Current,,,
 ,,,,,
 ,"""Automato system , startup : AgriTech Innovations""",11th,,11.0,2024
 ,Eroom,11th,,11.0,2024
@@ -578,8 +578,8 @@ Natural Sciences,WeTeach,4th,,4.0,2020
 ,Smenu,7th,,7.0,2022
 ,Hubrary,7th,,7.0,2022
 ,MelaseNZ - Diagnoztics,7th,,7.0,2022
-,Rufoof,Current,,12.0,2024
-,Meeting Point,Current,,12.0,2024
+,Rufoof,Current,,,
+,Meeting Point,Current,,,
 ,REUS,11th,,11.0,2024
 ,Apartments App,11th,,11.0,2024
 ,Algo-Rhythm,11th,,11.0,2024
@@ -643,11 +643,11 @@ Engineering,TrueMate,4th,,4.0,2020
 Business and Management,About The Fit,6th,Female,6.0,2021
 Engineering,Double date app,10th,Female,10.0,2023
 Humanities and Social Sciences,EcoAc,8th,Female,8.0,2022
-Business and Management,Dsee,Current,Female,12.0,2024
+Business and Management,Dsee,Current,Female,,
 Engineering,AYO-ADVERTISING YOUR OWN,4th,,4.0,2020
 ,TheraPlay,7th,Male,7.0,2022
 Humanities and Social Sciences,Ofir Englander,6th,Male,6.0,2021
-,CommuniPass,Current,Male,12.0,2024
+,CommuniPass,Current,Male,,
 Engineering,doorman,5th,,5.0,2021
 Business and Management,Remora,9th,Male,9.0,2023
 Engineering,,,Male,,
@@ -689,7 +689,7 @@ Engineering,Color Comparison between two objects - The ZikoScope,7th,Male,7.0,20
 Health Sciences,Park king,10th,Female,10.0,2023
 Humanities and Social Sciences,ISRBILLS,11th,Female,11.0,2024
 Natural Sciences,MonkeyGunz,8th,Male,8.0,2022
-,"""Our idea is to create a community-driven app that motivates children to engage in regular physical activity by connecting them with peers for group sports and fitness challenges. Kids can form teams, participate in personalized and group challenges, and track their steps and activity levels, receiving rewards for meeting specific goals. This gamified approach makes exercise fun and social, as children earn prizes for reaching step counts and completing various challenges, whether set individually or as a team. By fostering a sense of community, teamwork, and healthy competition, the app encourages kids to embrace a more active and balanced lifestyle.""",Current,Female,12.0,2024
+,"""Our idea is to create a community-driven app that motivates children to engage in regular physical activity by connecting them with peers for group sports and fitness challenges. Kids can form teams, participate in personalized and group challenges, and track their steps and activity levels, receiving rewards for meeting specific goals. This gamified approach makes exercise fun and social, as children earn prizes for reaching step counts and completing various challenges, whether set individually or as a team. By fostering a sense of community, teamwork, and healthy competition, the app encourages kids to embrace a more active and balanced lifestyle.""",Current,Female,,
 Engineering,bioreactor optimization,10th,Male,10.0,2023
 Engineering,NWoBD,6th,Male,6.0,2021
 Natural Sciences,Confessions,5th,,5.0,2021
@@ -721,7 +721,7 @@ Health Sciences,Thunder.Health,9th,Female,9.0,2023
 ,A SLEEP-AID FORMULATION COMPRISING IMMEDIATE RELEASE AND DELAYED- RELEASE COMPOSITIONS;,11th,Male,11.0,2024
 Business and Management,ElectroBlock,8th,Male,8.0,2022
 Engineering,Let's Meet,4th,,4.0,2020
-Engineering,Blabber,Current,Male,12.0,2024
+Engineering,Blabber,Current,Male,,
 Natural Sciences,Blocky,4th,,4.0,2020
 ,Whilx,10th,Male,10.0,2023
 ,Kasset,9th,Male,9.0,2023
@@ -783,7 +783,7 @@ Engineering,Togather,8th,Male,8.0,2022
 Business and Management,Auto Interpretation and Transformation of ECGs strips,7th,Male,7.0,2022
 ,ghostwrite ai,10th,Male,10.0,2023
 Engineering,Own-The-Job,4th,,4.0,2020
-Engineering,Meeting Point,Current,Male,12.0,2024
+Engineering,Meeting Point,Current,Male,,
 Health Sciences,PAOZA,11th,Female,11.0,2024
 Business and Management,Soda water on the go  instant,4th,,4.0,2020
 Humanities and Social Sciences,AlcoBid,6th,Male,6.0,2021
@@ -844,7 +844,7 @@ Engineering,Smenu,7th,Male,7.0,2022
 Humanities and Social Sciences,i - Therapy,9th,Male,9.0,2023
 Humanities and Social Sciences,i - Therapy,8th,Male,8.0,2022
 Engineering,TheraPlay,7th,Male,7.0,2022
-Natural Sciences,Classmate,Current,Male,12.0,2024
+Natural Sciences,Classmate,Current,Male,,
 Engineering,TheraPlay,5th,,5.0,2021
 Humanities and Social Sciences,RightTrack,11th,Male,11.0,2024
 Humanities and Social Sciences,Anxiety stress and depression without therapyst,6th,,6.0,2021
@@ -882,8 +882,8 @@ Engineering,EnterCom,5th,,5.0,2021
 Engineering,Cytox,11th,Male,11.0,2024
 Engineering,Marineford,6th,Male,6.0,2021
 ,ElectriWall,9th,Male,9.0,2023
-Natural Sciences,We Power Energy Company,Current,Male,12.0,2024
-Natural Sciences,ZamFresh Poultry Farm,Current,Male,12.0,2024
+Natural Sciences,We Power Energy Company,Current,Male,,
+Natural Sciences,ZamFresh Poultry Farm,Current,Male,,
 Engineering,NoName,7th,Male,7.0,2022
 Exact Science,EnterCom,5th,,5.0,2021
 Natural Sciences,Shifty,10th,Female,10.0,2023
@@ -939,7 +939,7 @@ Engineering,MangaRead,8th,Male,8.0,2022
 Humanities and Social Sciences,אשמח לדבר עם בן אדם לפני שאחשוף אותו,7th,Male,7.0,2022
 Humanities and Social Sciences,InSolution,8th,Male,8.0,2022
 Engineering,Tinder for swapping items - Aunty,7th,Male,7.0,2022
-Cognitive science,Mind Trainer (Sixth Cohort),6th,Male,6.0,2021
+Cognitive Science,Mind Trainer (Sixth Cohort),6th,Male,6.0,2021
 Business and Management,,,Male,,
 Business and Management,,,Male,,
 Engineering,Smart refrige,9th,Male,9.0,2023
@@ -958,40 +958,40 @@ Natural Sciences,jesta,7th,Male,7.0,2022
 Engineering,STEP Bypass Prosthesis,11th,Male,11.0,2024
 Engineering,Genesis AI,8th,Male,8.0,2022
 ,Driftext,10th,Male,10.0,2023
-Business and Management,"""An AI platform that is trained on the data of the MAYA website and the SEC website, the platform will process information from financial statements of public companies for analysts and portfolio managers who work for stock exchange members, insurance companies, banks and brokerages. The bot will know how to answer any question about which there is information from the public reports published by the company and will also know how to indicate a reference to the source of the information from which it extracted it. The platform as a final product will be presented to the user on the desktop as his personal bot and he can ask him any question he wants instead of digging and looking for hours for the necessary information in the financial report.""",Current,Male,12.0,2024
-Natural Sciences,Blabber,Current,Male,12.0,2024
+Business and Management,"""An AI platform that is trained on the data of the MAYA website and the SEC website, the platform will process information from financial statements of public companies for analysts and portfolio managers who work for stock exchange members, insurance companies, banks and brokerages. The bot will know how to answer any question about which there is information from the public reports published by the company and will also know how to indicate a reference to the source of the information from which it extracted it. The platform as a final product will be presented to the user on the desktop as his personal bot and he can ask him any question he wants instead of digging and looking for hours for the necessary information in the financial report.""",Current,Male,,
+Natural Sciences,Blabber,Current,Male,,
 Engineering,,,Male,,
-Engineering,Safepath,Current,Male,12.0,2024
+Engineering,Safepath,Current,Male,,
 Business and Management,,,Female,,
-Engineering,Rufoof,Current,Male,12.0,2024
-Engineering,Listo,Current,Male,12.0,2024
-Natural Sciences,VisualDiff,Current,Male,12.0,2024
-Health Sciences,Caseo,Current,Male,12.0,2024
-Engineering,ActiveLearning,Current,Male,12.0,2024
-Engineering,Torli,Current,Male,12.0,2024
+Engineering,Rufoof,Current,Male,,
+Engineering,Listo,Current,Male,,
+Natural Sciences,VisualDiff,Current,Male,,
+Health Sciences,Caseo,Current,Male,,
+Engineering,ActiveLearning,Current,Male,,
+Engineering,Torli,Current,Male,,
 Humanities and Social Sciences,Pick-share: location base application for sharing stuff.,6th,Female,6.0,2021
-Business and Management,SwitchAroo,Current,Male,12.0,2024
-Engineering,Anti attack drones,Current,Male,12.0,2024
+Business and Management,SwitchAroo,Current,Male,,
+Engineering,Anti attack drones,Current,Male,,
 Business and Management,NFThrone,Checks,Male,,
-Humanities and Social Sciences,Match day,Current,Female,12.0,2024
-Engineering,Zeide Roma Solutions Ltd.,Current,Male,12.0,2024
-Humanities and Social Sciences,App which helps to read works of art independently and more,Current,Male,12.0,2024
-Engineering,Lamed,Current,Female,12.0,2024
-Business and Management,I haven't chosen a name yet.,Current,Male,12.0,2024
-Engineering,WormWorks,Current,Male,12.0,2024
+Humanities and Social Sciences,Match day,Current,Female,,
+Engineering,Zeide Roma Solutions Ltd.,Current,Male,,
+Humanities and Social Sciences,App which helps to read works of art independently and more,Current,Male,,
+Engineering,Lamed,Current,Female,,
+Business and Management,I haven't chosen a name yet.,Current,Male,,
+Engineering,WormWorks,Current,Male,,
 Humanities and Social Sciences,חוות רימון,4th,,4.0,2020
-Engineering,Ai automation for cad design,Current,Male,12.0,2024
+Engineering,Ai automation for cad design,Current,Male,,
 Business and Management,מכונית מתנגשת כתחליף לרגילה למניעת תאונות,11th,Female,11.0,2024
-Engineering,Dsee,Current,Female,12.0,2024
-Natural Sciences,Easy Hydro,Current,Male,12.0,2024
-Engineering,BDVTrading,Current,Male,12.0,2024
+Engineering,Dsee,Current,Female,,
+Natural Sciences,Easy Hydro,Current,Male,,
+Engineering,BDVTrading,Current,Male,,
 ,פריצת גבולות,7th,Male,7.0,2022
 Health Sciences,Hospitality,5th,,5.0,2021
-Business and Management,F.B Diamond,Current,Male,12.0,2024
-Natural Sciences,GetLoose,Current,Male,12.0,2024
+Business and Management,F.B Diamond,Current,Male,,
+Natural Sciences,GetLoose,Current,Male,,
 Engineering,getlose,11th,Male,11.0,2024
-Business and Management,Classmate,Current,Male,12.0,2024
-Business and Management,"""Our idea is to create a community-driven app that motivates children to engage in regular physical activity by connecting them with peers for group sports and fitness challenges. Kids can form teams, participate in personalized and group challenges, and track their steps and activity levels, receiving rewards for meeting specific goals. This gamified approach makes exercise fun and social, as children earn prizes for reaching step counts and completing various challenges, whether set individually or as a team. By fostering a sense of community, teamwork, and healthy competition, the app encourages kids to embrace a more active and balanced lifestyle.""",Current,Female,12.0,2024
-Engineering,rAIghts,Current,Male,12.0,2024
-Engineering,Chess like mobile game for children,Current,Male,12.0,2024
-Natural Sciences,AeroAid,Current,Male,12.0,2024
+Business and Management,Classmate,Current,Male,,
+Business and Management,"""Our idea is to create a community-driven app that motivates children to engage in regular physical activity by connecting them with peers for group sports and fitness challenges. Kids can form teams, participate in personalized and group challenges, and track their steps and activity levels, receiving rewards for meeting specific goals. This gamified approach makes exercise fun and social, as children earn prizes for reaching step counts and completing various challenges, whether set individually or as a team. By fostering a sense of community, teamwork, and healthy competition, the app encourages kids to embrace a more active and balanced lifestyle.""",Current,Female,,
+Engineering,rAIghts,Current,Male,,
+Engineering,Chess like mobile game for children,Current,Male,,
+Natural Sciences,AeroAid,Current,Male,,

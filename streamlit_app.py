@@ -72,7 +72,7 @@ def classify_status(status, categories):
 
 # Function to classify faculty
 def classify_faculty(faculty):
-    faculties = ['Business and Management','Cognitive science','Engineering','Health Sciences','Humanities and Social Sciences','Natural Sciences','Cyber Industry']
+    faculties = ['Business and Management','Cognitive Science','Engineering','Health Sciences','Humanities and Social Sciences','Natural Sciences','Cyber Industry']
     if faculty in faculties:
         return faculty
     return "Not BGU"
