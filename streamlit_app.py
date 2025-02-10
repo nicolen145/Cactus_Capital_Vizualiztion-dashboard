@@ -12,14 +12,7 @@ import time
 
 # Set Streamlit page config
 st.set_page_config(page_title="Cactus Capital Startups Dashboard", page_icon="🌵", layout="wide")
-st.title("🌵 Cactus Capital fund for Startups 🌵")
-# Dashboard description
-st.markdown(
-    """
-    This dashboard analyzes investment trends at Cactus Capital, a student-run VC fund at Ben-Gurion University (BGU).  
-    Our goal is to identify the key factors that increase a startup's chances of securing investment.  
-    """
-)
+
 
 # Load the pre-cleaned datasets
 founders_data = pd.read_csv("data/Cleaned_Founders_Data.csv")
@@ -39,19 +32,19 @@ status_categories = {
 
 # Define industry categories for classification
 industry_categories = {
-    "Technology": ["AI", "ML", "Blockchain", "Cybersecurity", "SaaS", "IOT", "Tech"],
+    "Technology": ["AI", "ML", "Blockchain", "Cybersecurity", "SaaS", "IOT", "Tech","Mobile","Space","Engineering","Online Services","Sensors","AR/VR","Renewal","Web App","Time Management","Waste Management","ECO Engineering","Industry", "Time managment"],
     "Health": ["Health", "Healthcare", "Biotech", "Medtech", "Pharma"],
-    "Education": ["Edtech", "Education", "Learning"],
-    "Finance": ["Fintech", "Finance", "Banking", "Investment"],
-    "Agriculture": ["Agritech", "Agriculture", "Farming"],
-    "Retail": ["Retail", "Ecommerce", "Marketplace", "Shopping"],
-    "Energy": ["Green", "Energy", "Sustainability", "CleanTech"],
-    "Entertainment": ["Entertainment", "Media", "Gaming", "Music"],
-    "Mobility": ["Automotive", "Mobility", "Transport", "Logistics"],
+    "Education": ["Edtech", "Education", "Learning","Student","Ebooks","Non Profit","Private Teachers","Currently Student","Study Geography and Economics"],
+    "Finance": ["Fintech", "Finance", "Banking", "Investment","Financial","Financial Security","Content Creators Economy","Business","Content creators economy"],
+    "Agriculture": ["Agritech", "Agriculture", "Farming","Recycling"],
+    "Retail": ["Retail", "Ecommerce", "Marketplace", "Shopping", "Real Estate","Job Market","Construction"],
+    "Energy": ["Green", "Energy", "Sustainability", "CleanTech","Environmental"],
+    "Entertainment": ["Entertainment", "Media", "Gaming", "Music","Dating","Tourism Platforms","Matchmaking & Dating","Dating App","Tourism","Sports App","Social","Events","Beauty","News and Magazine/Productivity"],
+    "Mobility": ["Automotive", "Mobility", "Transport", "Logistics","Parkings"],
     "Manufacturing": ["Manufacturing", "Industrial", "Production", "Supply Chain"],
-    "Food": ["FoodTech", "Beverage", "Restaurants", "Hospitality"],
-    "Security": ["Defense", "Aerospace", "MilitaryTech", "Cybersecurity", "Privacy"],
-    "Government": ["GovTech", "Public Sector", "Smart Cities"],
+    "Food": ["FoodTech", "Beverage", "Restaurants", "Hospitality","מסעדה","Cook"],
+    "Security": ["Defense", "Aerospace", "MilitaryTech", "Cybersecurity", "Privacy","Safety clothing","Security","Cyber","Women’s Safety","Earthquake Resistance","Safety","Earthquakes resistance"],
+    "Government": ["GovTech", "Public Sector", "Smart Cities","Government","Services","Legal"],
     "HR": ["HRTech", "Recruitment", "Hiring", "Talent Management"],
 }
 
@@ -61,7 +54,6 @@ def classify_industry(industry, categories):
     for category, keywords in categories.items():
         if any(keyword.lower() in industry.lower() for keyword in keywords):
             return category
-    return "Other"
 
 # Function to classify status
 def classify_status(status, categories):
@@ -121,14 +113,36 @@ cleaned_data = startup_data[merged_data["Year"].notna()].reset_index(drop=True)
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio(
-    "Select a Visualization:",
-    ["Faculty Distribution","Industry Trends Over the Years","Gender Analysis in Startup Investment"]
+    "Select Page:",
+    ["🏠 Home", "📊 Faculty Distribution", "📈 Industry Trends Over the Years", "👥 Gender Analysis in Startup Investment"]
 )
 
+# Home Page
+if page == "🏠 Home":
+    st.title("🌵 Cactus Capital Fund for Startups 🌵")
+
+    st.markdown(
+        """
+        Welcome to the **Cactus Capital Investment Dashboard**, an interactive tool designed to analyze investment trends at 
+        **Cactus Capital**, the student-run VC fund at Ben-Gurion University (BGU).  
+        Our goal is to uncover the key factors that contribute to a startup’s success in securing funding.  
+
+        ---
+        
+        ### 📌 Dashboard Sections:
+        - **📊 Faculty Distribution:** Understanding which faculties at BGU contribute the most to startup creation.  
+        - **📈 Industry Trends Over the Years:** Tracking startup growth and industry investment patterns.  
+        - **👥 Gender Analysis in Startup Investment:** Exploring the impact of gender on funding success.  
+
+        ---
+        
+        🔍 **Use this dashboard to gain insights into startup investments and understand what drives success in the VC world!**  
+        """
+    )
 # ---------------------------------------------------------------------
 # Page Rendering Based on Selection
 
-if page == "Faculty Distribution":
+if page == "📊 Faculty Distribution":
     st.title("Faculty Distribution")
 
     # Create two columns: One for the description (left), one for the filter (right)
@@ -136,8 +150,8 @@ if page == "Faculty Distribution":
 
     with col1:
         # Short explanatory paragraph on the left
-        st.markdown("**The chart displays the number of startups per faculty, categorized by acceleration program.**")
-        st.markdown("**The filter allows users to select a startup status (All, Invested, Rejected, or Selection Process) to analyze trends across faculties.**")
+        st.markdown("##### **The chart displays the number of startups per faculty, categorized by acceleration program.**")
+        st.markdown("##### **The filter allows users to select a startup status (All, Invested, Rejected, or Selection Process) to analyze trends across faculties.**")
 
     with col2:
         # Status Filter on the right
@@ -178,12 +192,12 @@ if page == "Faculty Distribution":
 # ---------------------------------------------------------------------
 # Page Rendering Based on Selection
 
-elif page == "Industry Trends Over the Years":
-    st.title("Industry Trends Over the Years")
+elif page == "📈 Industry Trends Over the Years":
+    st.title("Industry Trends Over the Years Analysis")
 
     if "Year" in cleaned_data.columns and "Industry_Category" in cleaned_data.columns:
         # Ensure Year is an integer and remove NaN values
-        cleaned_data = cleaned_data.dropna(subset=["Year"])  
+        cleaned_data = cleaned_data.dropna(subset=["Year"])
         cleaned_data["Year"] = cleaned_data["Year"].astype(int)  # Convert to integer
 
         # Group data by Year for overall trend (without breaking into industries)
@@ -196,28 +210,28 @@ elif page == "Industry Trends Over the Years":
             .reset_index(name="Count")
         )
 
-        # **12 Distinct Colorblind-Friendly Colors (CUD color palette)**
+        # 12 Distinct Colorblind-Friendly Colors (CUD color palette)
         color_palette = [
             "#332288", "#117733", "#44AA99", "#F0E442", "#88CCEE", "#DDCC77",
             "#CC6677", "#AA4499", "#882255", "#000000", "#0571B0", "#CA0020"
-        ]  
+        ]
 
         # Assign each industry category a unique color
         unique_categories = sorted(industry_yearly_counts["Industry_Category"].unique())
         category_colors = {category: color_palette[i % len(color_palette)] for i, category in enumerate(unique_categories)}
 
-        # Layout: Explanation above, two columns for charts
-        st.markdown("### Industry Trends Analysis")
-        st.markdown(
-            "**The first chart provides an overall picture of startup growth over the years, "
-            "while the second chart allows users to compare specific industry categories.**"
-        )
+        st.markdown("##### This section provides insights into startup investment trends.\n"
+            "##### The bar chart shows startup growth trends over the years,\n"
+            "##### while the line chart compares industry categories to highlight market dynamics and opportunities,\n"
+            "##### helping to identify key areas of innovation and investment potential.")
 
-        # Create two columns
+
+
+
         col1, col2 = st.columns(2)
 
         with col1:
-            # **Fixing the Bar Chart (Categorical X-axis)**
+            # Overall Startup Growth Chart
             fig_overall = px.bar(
                 yearly_overall_counts,
                 x=yearly_overall_counts["Year"].astype(str),  # Convert to string for categorical x-axis
@@ -227,6 +241,14 @@ elif page == "Industry Trends Over the Years":
                 text_auto=True,
                 color_discrete_sequence=["#1f77b4"]  # Single blue color for clarity
             )
+
+            # Ensure X-axis only shows whole years
+            fig_overall.update_xaxes(
+                tickmode="array",
+                tickvals=sorted(industry_yearly_counts["Year"].unique()),  # Force integer years
+                ticktext=[str(year) for year in sorted(industry_yearly_counts["Year"].unique())]  # Display as string
+            )
+            fig_overall.update_layout(height=535)
             st.plotly_chart(fig_overall, use_container_width=True)
 
         with col2:
@@ -237,7 +259,7 @@ elif page == "Industry Trends Over the Years":
             selected_categories = st.multiselect(
                 "Select categories to compare yearly trends:",
                 options=all_categories_option,
-                default=["All Categories"],
+                default=["All Categories"]
             )
 
             # Handle "All Categories" selection
@@ -250,7 +272,7 @@ elif page == "Industry Trends Over the Years":
                     industry_yearly_counts["Industry_Category"].isin(selected_categories)
                 ]
 
-                # **Fixing the Trends Line Chart (Continuous X-axis)**
+                # Category Specific Trends Chart
                 fig_category = px.line(
                     category_data,
                     x="Year",  # Use integer year values
@@ -261,22 +283,28 @@ elif page == "Industry Trends Over the Years":
                     color_discrete_map=category_colors
                 )
 
-                # **Ensure X-axis only shows whole years**
+                # Ensure X-axis only shows whole years
                 fig_category.update_xaxes(
                     tickmode="array",
                     tickvals=sorted(industry_yearly_counts["Year"].unique()),  # Force integer years
                     ticktext=[str(year) for year in sorted(industry_yearly_counts["Year"].unique())]  # Display as string
                 )
-
+                
                 st.plotly_chart(fig_category, use_container_width=True)
 
 
 # ---------------------------------------------------------------------
 # Page Rendering Based on Selection
-if page == "Gender Analysis in Startup Investment":
+if page == "👥 Gender Analysis in Startup Investment":
     # Title and description
     data = merged_data_1
     st.title('Gender Analysis in Startup Investment')
+    st.markdown("##### **This section provides an overview of gender representation among startup founders.**\n"
+            "##### The pie chart visualizes the total number of founders by gender, highlighting disparities in leadership.\n\n"
+            "##### **The bar chart illustrates how founders progress through the investment process.**\n"
+            "##### It shows the proportions of those invested, rejected, or still in selection.")
+
+
 
     # Filter only relevant paths
     relevant_paths = ['The LAUNCHER', 'The KICKSTARTER']
@@ -290,16 +318,10 @@ if page == "Gender Analysis in Startup Investment":
     }
 
     # Layout: Two columns for Pie Chart (left) and Bar Chart (right)
-    st.header('Gender Distribution and Investment Progress')
+
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown(
-            "**This section provides an overview of gender representation among startup founders.** "
-            "The pie chart shows the total number of founders from each gender, helping to visualize "
-            "disparities in startup leadership."
-        )
-
         # Overall Founders by Gender Pie Chart
         founders_by_gender = (
             data.groupby('Gender')['Num Of Founders']
@@ -317,6 +339,9 @@ if page == "Gender Analysis in Startup Investment":
             color='Gender', 
             color_discrete_map=gender_colors  # Apply gender-specific colors
         )
+        fig1.update_layout(height=430)
+        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.markdown("<br><br>", unsafe_allow_html=True)
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
@@ -327,30 +352,33 @@ if page == "Gender Analysis in Startup Investment":
         if selected_path != "All Paths":
             data = data[data["Path_x"] == selected_path]
 
-        # Add explanation above the bar chart
-        st.markdown(
-            "**This bar chart shows how founders of different genders progress through the investment process.** "
-            "Each bar represents the number of founders who reached each stage: 'Invested', 'Rejected', "
-            "or are still in the 'Selection Process'."
-        )
+        
 
         key_statuses = ["Invested", "Rejected", "Selection Process"]
+        filtered_data = data[data['Status_x'].isin(key_statuses)]
         status_gender_counts = (
-            data[data['Status_x'].isin(key_statuses)]
-            .groupby(['Status_x', 'Gender'])['Num Of Founders']
+            filtered_data.groupby(['Status_x', 'Gender'])['Num Of Founders']
             .sum()
             .reset_index()
         )
 
+        
+
+        # Bar chart showing investment stages by gender in percentage
+        status_gender_counts = filtered_data.groupby(['Status_x', 'Gender']).size().reset_index(name='Count')
+        total_by_gender = filtered_data.groupby('Gender').size().reset_index(name='Total')
+        status_gender_counts = status_gender_counts.merge(total_by_gender, on='Gender')
+        status_gender_counts['Percentage'] = (status_gender_counts['Count'] / status_gender_counts['Total']) * 100
+        
         fig2 = px.bar(
-            status_gender_counts, 
-            x='Status_x', 
-            y='Num Of Founders', 
-            color='Gender', 
-            title='Founders by Gender Across Investment Stages', 
-            barmode='group',
-            labels={"Status_x": "Application Status", "Num Of Founders": "Number of Founders"},
-            color_discrete_map=gender_colors  # Ensure consistent colors
+            status_gender_counts,
+            x='Status_x',
+            y='Percentage',
+            color='Gender',
+            title='Percentage of Founders by Gender Across Investment Stages',
+            labels={"Status_x": "Application Status", "Percentage": "Percentage of Founders"},
+            color_discrete_map=gender_colors,
+            barmode='group'
         )
         st.plotly_chart(fig2, use_container_width=True)
 
