@@ -248,7 +248,9 @@ elif page == "📈 Industry Trends Over the Years":
                 tickvals=sorted(industry_yearly_counts["Year"].unique()),  # Force integer years
                 ticktext=[str(year) for year in sorted(industry_yearly_counts["Year"].unique())]  # Display as string
             )
-            fig_overall.update_layout(height=535)
+            fig_overall.update_layout(height=495)
+            st.markdown('<span style="color: red;">❗ **Note - The data is updated until the first semester of 2024-2025.**', unsafe_allow_html=True)
+
             st.plotly_chart(fig_overall, use_container_width=True)
 
         with col2:
