@@ -1,2 +1,8 @@
 streamlit
 pandas
+plotly
+re
+os
+numpy
+dash
+time
